@@ -1,0 +1,16 @@
+76d36c24b3766bc6c0a41e0d98a75ed7 *DESCRIPTION
+72f36e87866e8b7994a7bff02249584d *NAMESPACE
+71f30a2addc9a6451ea803965c3b34df *R/GreedySegmente.R
+31b8d9158a86f032356b4362c929d0d4 *R/plot.postCP.r
+a36bc58b7827f180c197150dd70d33b5 *R/postCP.modelsel.r
+d8e49249ee4f3130b951c8f005aa946f *R/postCP.r
+741087274d15f76ad70a99c32a1e0272 *man/GreedySegmente.Rd
+e4ac0272cc218dc0004f2dc2d86dfa3a *man/lesum.Rd
+e689cf89634fb6a5f423a72315ff479b *man/mleNB.Rd
+73ad4ddc11c116bd4a86bc01af98c7b2 *man/plot.postCP.Rd
+77bd58e72f5837dd257b1164ecbd72e8 *man/postCP.Rd
+eb66e0fd961f997d094838c270215eb4 *man/postCPcrit.Rd
+9e320982836fa7a640b53c264b5097df *man/postCPmodelsel.Rd
+11d294dc06f90059e5f6b8d05580c62a *man/postCPsample.Rd
+0e0c8ea4d24977ecf426ae2eb6b6dc4f *man/viterbi.Rd
+b55b58bd771498ac9ca5f7d53ef05c38 *src/postCP.cpp

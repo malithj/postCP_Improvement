@@ -1,0 +1,2 @@
+useDynLib(postCP)
+exportPattern("^[[:alpha:]]+")
