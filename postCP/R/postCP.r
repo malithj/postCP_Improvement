@@ -127,6 +127,9 @@ postCP.default <- function(data=numeric(),seg=integer(),family = poisson,lprob=n
   else if(family$family == 'binomial'){
     model = 3
   }
+  else{
+    model = 0
+  }
   
   if ((model!=1)&(model!=2)&(model!=3)){
     stop("Choose model=1 (Poisson) or 2 (normal) or 3 (negative binomial)")
