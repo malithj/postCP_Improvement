@@ -107,30 +107,9 @@ print.postCPsample <- function(x,...)
   }
 }
 
-postCP <- function(data=numeric(),seg=integer(),family = poisson,lprob=numeric(),level.ind=numeric(),keep=TRUE,ci=0.9,viterbi=TRUE,initsegci=TRUE,nsamples=0,gen.data="n",prior=0.5,prior.type="n",epsilon=1e-9,disp.equal=TRUE,eps.nb=1e-8,verbose=TRUE,debug=FALSE) UseMethod("postCP")
+postCP <- function(data=numeric(),seg=integer(),model=1,lprob=numeric(),level.ind=numeric(),keep=TRUE,ci=0.9,viterbi=TRUE,initsegci=TRUE,nsamples=0,gen.data="n",prior=0.5,prior.type="n",epsilon=1e-9,disp.equal=TRUE,eps.nb=1e-8,verbose=TRUE,debug=FALSE) UseMethod("postCP")
 
-postCP.default <- function(data=numeric(),seg=integer(),family = poisson,lprob=numeric(),level.ind=numeric(),keep=TRUE,ci=0.9,viterbi=TRUE,initsegci=TRUE,nsamples=0,gen.data="n",prior=0.5,prior.type="n",epsilon=1e-9,disp.equal=TRUE,eps.nb=1e-8,verbose=TRUE,debug=FALSE) {
-  
-  if(is.character(family)){
-    family <- get(family, mode = "function", envir = parent.frame())
-  }
-  if(is.function(family)){
-    family <- family()
-  }
-  
-  if(family$family == 'poisson'){
-    model = 1
-  }
-  else if(family$family == 'gaussian'){
-    model = 2
-  }
-  else if(family$family == 'binomial'){
-    model = 3
-  }
-  else{
-    model = 0
-  }
-  
+postCP.default <- function(data=numeric(),seg=integer(),model=1,lprob=numeric(),level.ind=numeric(),keep=TRUE,ci=0.9,viterbi=TRUE,initsegci=TRUE,nsamples=0,gen.data="n",prior=0.5,prior.type="n",epsilon=1e-9,disp.equal=TRUE,eps.nb=1e-8,verbose=TRUE,debug=FALSE) {
   if ((model!=1)&(model!=2)&(model!=3)){
     stop("Choose model=1 (Poisson) or 2 (normal) or 3 (negative binomial)")
   }
