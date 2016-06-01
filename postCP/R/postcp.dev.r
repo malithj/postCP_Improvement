@@ -5,17 +5,43 @@ postcp <- function(formula, data=numeric(), bp=integer(), family = gaussian, hom
   beta=matrix(par,nrow=p)
   Xbeta=X%*%beta
   K=ncol(beta)
-  # compute the response variable y
   cp=bp
   CP=c(0,cp,n)
   y=rep(NA,n)
-  for (k in 1:K) {
-    idx=(CP[k]+1):(CP[k+1])
-    y[idx]=rnorm(diff(range(idx))+1,Xbeta[idx,k],sigma)
-  }
-  # compute the log-evidence le
-  # this is basically the only model-specific part !
-  le=-(Xbeta-y)^2/2/sigma^2-log(sigma)-0.5*log(2*pi)
+  
+  # compute response variable based on the family
+    if(is.character(family)){
+          family <- get(family, mode = "function", envir = parent.frame())
+     }
+    if(is.function(family)){
+         family <- family()
+    }
+  
+    if(family$family == 'poisson'){
+      # compute the response variable y
+      for (k in 1:K) {
+        idx=(CP[k]+1):(CP[k+1])
+        y[idx]=rpois(diff(range(idx))+1,Xbeta[idx,k])
+      }
+      # compute the log-evidence le
+      # this is basically the only model-specific part !
+      le=y*log(Xbeta)-y
+     }
+    else if(family$family == 'gaussian'){
+      # compute the response variable y
+      for (k in 1:K) {
+        idx=(CP[k]+1):(CP[k+1])
+        y[idx]=rnorm(diff(range(idx))+1,Xbeta[idx,k],sigma)
+      }
+      
+      # compute the log-evidence le
+      # this is basically the only model-specific part !
+      le=-(Xbeta-y)^2/2/sigma^2-log(sigma)-0.5*log(2*pi)
+     }
+    else if(family$family == 'binomial'){
+      # compute the response variable y
+     }
+  
   # build workspace for forward-backward
   lFw=matrix(0,n,K)
   lFw[]=le[]
