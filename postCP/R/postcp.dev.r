@@ -88,6 +88,14 @@ postcp <- function(formula, data=numeric(), bp=integer(), family = gaussian, hom
     aux=lFw[-n,k]+le[-1,k+1]+lBk[-1,k+1]
     post.cp[-n,k]=exp(aux-max(aux))
   }
+  # parameter estimation
+  for(k in 1:(K)){
+    fit=lm(y~X,weights=post[,k])
+    # model specific estimation of log evidence 
+    if(family$family == 'gaussian'){
+      le.updated = dnorm(y,predict(fit),sigma,log=TRUE)
+    }
+  }
   return(list(n=n,loglik=loglik,post=post,post.cp=post.cp))
 }
 
