@@ -17,3 +17,15 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// maxFwBk
+SEXP maxFwBk(Rcpp::NumericMatrix ledata, Rcpp::NumericMatrix workdata);
+RcppExport SEXP postCP_maxFwBk(SEXP ledataSEXP, SEXP workdataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type ledata(ledataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type workdata(workdataSEXP);
+    __result = Rcpp::wrap(maxFwBk(ledata, workdata));
+    return __result;
+END_RCPP
+}

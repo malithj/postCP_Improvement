@@ -5,3 +5,7 @@ FwBk <- function(ledata, workdata) {
     .Call('postCP_FwBk', PACKAGE = 'postCP', ledata, workdata)
 }
 
+maxFwBk <- function(ledata, workdata) {
+    .Call('postCP_maxFwBk', PACKAGE = 'postCP', ledata, workdata)
+}
+
