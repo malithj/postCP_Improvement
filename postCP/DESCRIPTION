@@ -17,4 +17,6 @@ SystemRequirements: GNU make
 Packaged: 2014-01-02 17:52:35 UTC; ripley
 NeedsCompilation: yes
 Repository: CRAN
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 Date/Publication: 2014-01-02 19:18:27

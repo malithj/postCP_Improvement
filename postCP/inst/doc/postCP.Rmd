@@ -1,0 +1,35 @@
+---
+title: "An Introduction to postCP"
+author: "Malith Jayaweera"
+date: "`r Sys.Date()`"
+output:  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Introduction to postCP}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+This vignette documents the mechanism provided in postCP 2.0. The document will first explain the theoretical basis and it will move on to explain the usage of the package. 
+
+##change-point problem
+The postCP Package is based on the change point model 
+$$
+\boldsymbol y[I_k] \sim \boldsymbol X[I_k] \times \boldsymbol \beta^k
+$$ 
+where $\textbf{y} \in \mathbb{R} ^{n\times d}$ is the response variable and $\textbf{X} \in \mathbb{R}^{n\times p}$ is the covariate matrix. The response variable is generated with $K>1$ segments according to any Generalized Linear Model (ex: Gaussian or binomial regressions). 
+
+$I_k = [cp_{k−1} + 1, cp_k ]$ is the index of the individuals of the k th segment, and with the convention that
+$cp_0 = 0$ and that $cp_K = n$
+
+### Posterior change-point distribution
+For a given parameter $\boldsymbol \theta$, our objective is to compute the posterior change-point distribution:
+$$
+\mathbb{P}(\textbf{cp} | \boldsymbol y,\boldsymbol X ; \boldsymbol \theta)
+$$
+or, equivalently, the posterior segmentation distribution:
+$$
+\mathbb{P}(\boldsymbol S | \boldsymbol y,\boldsymbol X ; \boldsymbol \theta)
+$$
+
+The posterior distributions are calculated through a constrained HMM (Hidden Markov Model) coded in C++ with the aim of achieving efficiency in computations. 
+
+

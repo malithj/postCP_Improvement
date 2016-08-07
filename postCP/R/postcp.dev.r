@@ -1,8 +1,11 @@
-postcp <- function(formula, data=numeric(), bp=integer(), family = gaussian, homoscedastic=TRUE, par=numeric(), sigma=1.0) {
+postcp <- function(formula, data=numeric(), bp=integer(), family = gaussian, homoscedastic=TRUE, par=numeric(), sigma=1.0, maxFB=FALSE) {
   X=model.matrix(formula,data)
   n=nrow(X)
   p=ncol(X)
-  beta=matrix(par,nrow=p)
+  beta=par 
+  if(nrow(beta)!=p){
+    stop("Dimensions of the data matrix do not match with parameters(beta matrix)")  
+  } 
   Xbeta=X%*%beta
   K=ncol(beta)
   cp=bp
@@ -78,7 +81,12 @@ postcp <- function(formula, data=numeric(), bp=integer(), family = gaussian, hom
   lFw[]=le[]
   lBk=matrix(0,n,K)
   # call forward-backward
-  loglik=FwBk(lFw,lBk)-lchoose(n-1,K-1)
+  if(maxFB){  # call maxFwBk if the most probable change point configuration is required
+    loglik=maxFwBk(lFw,lBk)-lchoose(n-1,K-1)
+  }
+  else{ # call FwBk if marginal distributions for change points are required
+    loglik=FwBk(lFw,lBk)-lchoose(n-1,K-1)
+  }
   # compute posterior distribution
   post=lFw+lBk
   post=exp(post-apply(post,1,logsumexp))
