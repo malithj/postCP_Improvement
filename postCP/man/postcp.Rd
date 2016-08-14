@@ -6,10 +6,10 @@
   Characterize uncertainty in change-point estimates.
 }
 \description{
-  The functions are used for change-point problems, after an initial set of change-points within the data has already been obtained. The function postCP obtains estimates of posterior probabilities of change-points.
+  The functions are used for change-point problems, after an initial set of change-points within the data has already been obtained. The function postCP obtains estimates of posterior probabilities of change-points and hidden states for each observation.
 }
 \usage{
-postcp(formula, data=numeric(), bp=integer(), family = gaussian, par=numeric(), homoscedastic=TRUE,  sigma=1.0)
+postcp(formula, data, bp=integer(), family = gaussian, sigma=1.0, maxFB = FALSE)
 
 }
 \arguments{
@@ -17,18 +17,21 @@ postcp(formula, data=numeric(), bp=integer(), family = gaussian, par=numeric(), 
 \item{data}{A matrix of data to be segmented. Must have no missing values}
 \item{bp}{break points. i.e. For K segments, a vector of K-1 initial estimates of change-point locations, corresponding to the index of the last observation of the first K-1 segments.}
 \item{family}{Emission distribution of the observed data as in glm. Supports Poisson(default), Gaussian, Negative Binomial and Gamma distributions.}
-\item{par}{A matrix of initial values of the regression coefficients}
-\item{homoscedastic}{Applies for the homoscedastic gaussian model}
 \item{sigma}{ Value added to sigma for gaussian data}
+\item{maxFB}{ If maxFB = TRUE : call maxFwBk if the most probable change point configuration is required otherwise marginal distributions for change points are returned}
 }
 
 
 \value{
-\item{model}{Emission distribution (Poisson or normal).} 
+\item{model}{Emission distribution (Poisson, Normal, Gamma, Binomial).}
 \item{n}{Length of segmented data}
 \item{loglik}{loglikelihood matrix}
 \item{post}{Posterior probability distribution}
 \item{post.cp}{Posterior change point probability distribution}
+\item{le.updated}{Updated Log Evidence matrix}
+\item{param.before}{Initial regression coefficients}
+\item{param.updated}{Updated regression coefficients using postCP}
+\item{response.variable}{Response variable of the data input}
 }
 
 \details{
@@ -42,6 +45,8 @@ LazyLoad: \tab yes\cr
 }
 
 Estimates posterior probabilities of change in distribution and state probabilities in segmentation problems through the forward-backward algorithm using a restricted hidden Markov model.
+
+The user can input a data matrix and specify the formula required. The package will estimate the initial regression coefficients through the change point model. It will then calculate the posterior change point probabilities and will update the parameter estimates and the log evidence.
 }
 
 \author{
@@ -60,22 +65,23 @@ Maintainer: Who to complain to <the-minh.luong@parisdescartes.fr>
 
 \examples{
 require(postCP)
-set.seed(18)
-#prepare data 
-n=300
+#prepare data
 sigma=1.3
-#Initial regression coefficients 
-beta_ref=matrix(c(-0.7,0.3,0.2,-0.5,0.7,0.3),nrow=2,byrow=TRUE)  
-cp=c(100,200)
-num=runif(n)
-#Generate a matrix of data
-dd=data.frame(num)
-
-#Apply postcp function 
-res = postcp(~1+num,family=gaussian,data=dd,bp=c(100,200),par=beta_ref,sigma)
+#Change point estimates
+bp=c(7,10)
+#Obtain data from longley dataset
+data = longley
+#Apply postcp function
+res = postcp(Employed ~ GNP + Armed.Forces,family=gaussian(),data=data,bp=c(7,10),sigma)
 
 #Plot the results
-plot.postCP.dev(res,main="Posterior Change Point Distribution")
+plot.postCP(res,main="Posterior Change Point Probability Distribution")
+
+#Apply postcp function with maxFB=TRUE to obtain marginal distribution
+res = postcp(Employed ~ GNP + Armed.Forces,family=gaussian(),data=data,bp=c(7,10),sigma,maxFB=TRUE)
+
+#Plot the results
+plot.postCP(res,main="Posterior Change Point Probability Distribution")
 
 }
 

@@ -2,9 +2,9 @@
 using namespace Rcpp;
 
 // This is the core implementation of the forward-backward model
-// 
 //
-//   
+//
+//
 //
 inline double logsumexp(double loga,double logb) {
   if (loga>logb)
@@ -66,7 +66,7 @@ SEXP maxFwBk(Rcpp::NumericMatrix ledata, Rcpp::NumericMatrix workdata){
   return(wrap(le(n-1,K-1)));
 }
 // You can include R code blocks in C++ files processed with sourceCpp
-// (useful for testing and development). The R code will be automatically 
+// (useful for testing and development). The R code will be automatically
 // run after the compilation.
 //
 
