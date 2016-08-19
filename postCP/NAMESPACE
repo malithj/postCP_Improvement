@@ -1,2 +1,3 @@
 useDynLib(postCP)
+importFrom(Rcpp,evalCpp)
 exportPattern("^[[:alpha:]]+")

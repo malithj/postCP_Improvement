@@ -11,8 +11,12 @@ Description: The functions are used for change-point problems, after an initial 
 License: GPL (>= 2)
 LazyLoad: yes
 Depends: MASS, Segmentor3IsBack
+Imports: Rcpp
+LinkingTo: Rcpp
 SystemRequirements: GNU make
 Packaged: 2014-01-02 17:52:35 UTC; ripley
 NeedsCompilation: yes
 Repository: CRAN
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 Date/Publication: 2014-01-02 19:18:27

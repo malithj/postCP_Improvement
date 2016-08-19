@@ -4,7 +4,7 @@
   Plot method for postCP.
 }
 \description{
-  Plots results of postCP, plots observed data (if included in postCP output), segment or posterior means, and posterior probabilities.
+  Plots results of postCP, plots observed data (if included in postCP output) and posterior probabilities.
 }
 \usage{
 \method{plot}{postCP}(x, line.prob="cp",line.mean="seg",rm.outliers=0,
@@ -12,11 +12,9 @@ main=character(),xlab=NA,ylab=NA,p.col="blue",pch=16,p.cex=NA,
 m.col="brown",m.lty=1,m.lwd=1,l.col=NA,l.lty=NA,l.lwd=NA, ...)
 }
 \arguments{
-\item{x}{Results of postCP with keep=TRUE, use as input for plot.postCP.}
-\item{line.prob}{Type of posterior probability plotted. "cp": change-point probability (default), "state": state (or segment) probability, "level": level probability, for models where different segments may share the same mean.}
-\item{line.mean}{Type of observed mean plotted. "seg": segment mean (default), "post": posterior mean of observation.}
-\item{rm.outliers}{Adjusts y-axis so that rm.outliers most extreme proportion of observations not plotted, if 0 (default) no observations removed.}
+\item{x}{Results of postCP, use as input for plot.postCP.}
 \item{main}{Main title of plot (see par).}
+\item{show.response}{If show.response=TRUE, the response variable is displayed from the data instead of the Posterior change point probability distribution}
 \item{xlab}{Label for x-axis (see par).}
 \item{ylab}{Label for y-axis (see par).}
 \item{p.col}{Colour of scatterplot of data (see par).}
@@ -31,7 +29,7 @@ m.col="brown",m.lty=1,m.lwd=1,l.col=NA,l.lty=NA,l.lwd=NA, ...)
 \item{\dots}{Additional arguments.}
 }
 
-\value{ 
+\value{
 \item{out}{List with limits of x and y-axis. May be useful for labelling.}
 }
 
@@ -44,7 +42,6 @@ Date: \tab 2013-11-25\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
-Typical usage is todo!
 
 }
 
@@ -65,18 +62,19 @@ Maintainer: Who to complain to <the-minh.luong@parisdescartes.fr>
 }
 
 \examples{
-require(postCP);
-N=2000; x=c(rpois(N,2.0),rpois(2*N,2.2),rpois(N,1.9));
-# obtain 85% confidence intervals for changepoints, keep forward and backward matrices
-res=postCP(data=x,seg=c(N,3*N),keep=TRUE, ci=0.85);  
-par(mfrow=c(1,2))
-## Use results from forward-backward algorithm to plot data and posterior change-point probabilities
-plot(res);
-## Use results from forward-backward algorithm to plot data and posterior state probabilities
-plot(res,"state");
-## As above, but plotting posterior means instead of segment means
-plot(res,"cp","post",main="post. change-point prob.",p.col="blue",l.col="brown",m.col="green");
-line.3cols=c("brown","red","orange");
-plot(res,"state","post",main="post. segment prob.",p.col="blue",l.col=line.3cols,m.col="green");
+require(postCP)
+#prepare data
+sigma=1.3
+#Change point estimates
+bp=c(7,10)
+#Obtain data from longley dataset
+data = longley
+#Apply postcp function
+res = postcp(Employed ~ GNP + Armed.Forces,family=gaussian(),data=data,bp=c(7,10),sigma)
+
+#Plot the results
+plot.postCP(res,main="Posterior Change Point Probability Distribution")
+
 }
+
 
